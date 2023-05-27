@@ -11,6 +11,7 @@ import Login from '../components/Login';
 import Register from '../components/Register';
 
 import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../app/firebase';
 
 export default function Index({ navigation }){
     const { isLoggedIn, setIsLoggedIn, visible, setVisible  } = useContext(ContextOBJ)

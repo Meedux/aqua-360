@@ -31,24 +31,33 @@ export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
-export const createUser = async (user) => {
+export const createUser = async (user, id) => {
     const docRef = await addDoc(collection(db, "users"), user);
-    console.log("Document written with ID: ", docRef.id);
+    // add a uid to the document
+    await updateDoc(doc(db, "users", docRef.id), {
+        uid: id
+    });
 }
 
-export const createCustomer = async (customer) => {
+export const createClient = async (customer, id) => {
     const docRef = await addDoc(collection(db, "clients"), customer);
-    console.log("Document written with ID: ", docRef.id);
+    await updateDoc(doc(db, "clients", docRef.id), {
+        uid: id
+    });
 }
 
-export const createEmployee = async (employee) => {
+export const createDeliveryBoy = async (employee) => {
     const docRef = await addDoc(collection(db, "delivery-boys"), employee);
-    console.log("Document written with ID: ", docRef.id);
+    await updateDoc(doc(db, "delivery-boys", docRef.id), {
+        uid: id
+    });
 }
 
 export const createAdmin = async (user) => {
     const docRef = await addDoc(collection(db, "manager"), user);
-    console.log("Document written with ID: ", docRef.id);
+    await updateDoc(doc(db, "manager", docRef.id), {
+        uid: id
+    });
 }
 
 export const login = async (email, password) => {
@@ -75,13 +84,15 @@ export const register = async (user) => {
     try{
         const userCredential = await createUserWithEmailAndPassword(auth, user.email, user.password);
         const newUser = userCredential.user;
-        
         if(newUser){
-            await createUser(user);
-            return newUser;
+            const id = newUser.uid;
+            await createUser(user, id);
+            await createClient(user, id);
+            return true;
         }
     }
     catch(error){
         alert(error);
+        return false;
     }
 }

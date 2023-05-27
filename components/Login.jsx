@@ -44,7 +44,7 @@ const Login = ({ set, navigation, setVisible }) => {
                     </View>
                     <View style={styles.inputContainer}>
                         <Icon type="material" name="email" size={25} color={'#146C94'} style={{marginRight: 10}}/>
-                        <TextInput placeholder="Enter email address" onChange={(e) => setEmail(e)}/>
+                        <TextInput placeholder="Enter email address" onChangeText={(e) => setEmail(e)}/>
                     </View>
 
                     <View style={styles.labelContainer}>
@@ -52,7 +52,7 @@ const Login = ({ set, navigation, setVisible }) => {
                     </View>
                     <View style={styles.inputContainer}>
                         <Icon type="material" name="lock" size={25} color={'#146C94'} style={{marginRight: 10}}/>
-                        <TextInput placeholder="Enter password" secureTextEntry onChange={(e) => setPassword(e)}/>
+                        <TextInput placeholder="Enter password" secureTextEntry onChangeText={(e) => setPassword(e)}/>
                     </View>
 
 

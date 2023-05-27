@@ -10,7 +10,7 @@ import Profile from '../screens/Profile'
 import { Icon } from '@rneui/themed'
 
 import { onAuthStateChanged } from 'firebase/auth'
-
+import { auth } from '../app/firebase';
 
 const Tab = createBottomTabNavigator()
 
@@ -40,6 +40,7 @@ const Navibar = () => {
                             height: 120,
                             borderTopRightRadius: 31,
                             borderTopLeftRadius: 31,
+                            position: "absolute",
                         },
                         tabBarLabelStyle: { display: "none" },
 
