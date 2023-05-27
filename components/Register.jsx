@@ -8,13 +8,15 @@ const Register = ({ set, navigation, setVisible }) => {
     const [ password, setPassword ] = useState('')
     const [ name, setName ] = useState('')
     const [ address, setAddress ] = useState('')
+    const [ number, setNumber ] = useState('')
 
     function registerHandler(){
         const user = {
             email: email,
             password: password,
             name: name,
-            address: address
+            address: address,
+            contact_no: number,
         }
         register(user)
         setVisible(false)
@@ -66,6 +68,14 @@ const Register = ({ set, navigation, setVisible }) => {
                     <View style={styles.inputContainer}>
                         <Icon type="material" name="lock" size={25} color={'#146C94'} style={{marginRight: 10}}/>
                         <TextInput placeholder="Enter password" secureTextEntry onChangeText={(e) => setPassword(e)}/>
+                    </View>
+
+                    <View style={styles.labelContainer}>
+                        <Text style={{color: "#146C94", fontWeight: "bold",}}>Contact Number</Text>
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Icon type="material" name="call" size={25} color={'#146C94'} style={{marginRight: 10}}/>
+                        <TextInput placeholder="Enter Contact Number" onChangeText={(e) => setNumber(e)}/>
                     </View>
 
                     <View style={styles.labelContainer}>
