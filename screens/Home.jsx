@@ -61,9 +61,6 @@ const styles = StyleSheet.create({
     home_container:{
         width: '100%',
         backgroundColor: '#19A7CE',
-    },
-    logo_container: {
-
     }, 
     header: {
         marginTop: 40,  
