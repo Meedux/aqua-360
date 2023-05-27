@@ -1,8 +1,7 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { ContextOBJ } from '../app/appcontext'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from '../screens/Home'
 import Index from '../screens/Index'
 import Activity from '../screens/Activity'
@@ -10,11 +9,24 @@ import Profile from '../screens/Profile'
 
 import { Icon } from '@rneui/themed'
 
+import { onAuthStateChanged } from 'firebase/auth'
+
 
 const Tab = createBottomTabNavigator()
 
 const Navibar = () => {
-    const { isLoggedIn } = useContext(ContextOBJ)
+    const { isLoggedIn, setIsLoggedIn } = useContext(ContextOBJ)
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if(user){
+                setIsLoggedIn(true)
+
+            } else {
+                setIsLoggedIn(false)
+            }
+        })
+    }, [])
   return (
     <>
         <NavigationContainer>

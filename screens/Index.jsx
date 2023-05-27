@@ -10,10 +10,21 @@ import Form from '../components/Form';
 import Login from '../components/Login';
 import Register from '../components/Register';
 
-export default function Index({ navigation }){
-    const { isLoggedIn, setIsLoggedIn } = useContext(ContextOBJ)
+import { onAuthStateChanged } from 'firebase/auth';
 
-    const [ visible, setVisible ] = useState(true)
+export default function Index({ navigation }){
+    const { isLoggedIn, setIsLoggedIn, visible, setVisible  } = useContext(ContextOBJ)
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if(user){
+                setIsLoggedIn(true)
+                navigation.navigate('Home')
+            } else {
+                setIsLoggedIn(false)
+            }
+        })
+    }, [])
 
     const [ tab, setTab ] = useState('location')
     return(

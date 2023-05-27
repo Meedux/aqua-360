@@ -1,10 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { Icon, Button } from '@rneui/themed'
-import { ContextOBJ } from '../app/appcontext'
+import { register } from '../app/firebase'
 
 const Register = ({ set, navigation, setVisible }) => {
-    const { register } = useContext(ContextOBJ)
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ name, setName ] = useState('')
@@ -50,7 +49,7 @@ const Register = ({ set, navigation, setVisible }) => {
                     </View>
                     <View style={styles.inputContainer}>
                         <Icon type="material" name="person" size={25} color={'#146C94'} style={{marginRight: 10}}/>
-                        <TextInput placeholder="Enter full name" />
+                        <TextInput placeholder="Enter full name" onChange={(e) => setName(e)}/>
                     </View>
 
                     <View style={styles.labelContainer}>
@@ -58,7 +57,7 @@ const Register = ({ set, navigation, setVisible }) => {
                     </View>
                     <View style={styles.inputContainer}>
                         <Icon type="material" name="email" size={25} color={'#146C94'} style={{marginRight: 10}}/>
-                        <TextInput placeholder="Enter email address" />
+                        <TextInput placeholder="Enter email address" onChange={(e) => setEmail(e)}/>
                     </View>
 
                     <View style={styles.labelContainer}>

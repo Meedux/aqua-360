@@ -1,19 +1,15 @@
 import React, { useContext, useState } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import { Icon, Button } from '@rneui/themed'
-import { ContextOBJ } from '../app/appcontext'
+import { login } from '../app/firebase'
 
 const Login = ({ set, navigation, setVisible }) => {
-    const { login } = useContext(ContextOBJ)
+    
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
 
     function loginHandler(){
-        const user = {
-            email: email,
-            password: password
-        }
-        login(user)
+        login(email, password)
         setVisible(false)
         navigation.navigate('Home')
     }

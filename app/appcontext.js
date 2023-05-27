@@ -3,6 +3,7 @@ import { createContext, useState } from 'react'
 
 export const ContextOBJ = createContext()
 const AppContext = ({ children }) => {
+    const [ visible, setVisible ] = useState(true)
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const miniDb = []
     const [user, setUser] = useState(null)
@@ -33,7 +34,9 @@ const AppContext = ({ children }) => {
         login,
         register,
         user,
-        setUser
+        setUser,
+        visible,
+        setVisible
     }}>
         {children}
     </ContextOBJ.Provider>  
