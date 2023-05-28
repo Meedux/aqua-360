@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, ScrollView, View, Text, TouchableOpacity } from 'react-native'
 import { Icon } from '@rneui/themed'
+import ActivityHistory from '../components/ActivityHistory'
 
-const Activity = () => {
+const Activity = ({ navigation }) => {
+  const [ activityHistoryVisibility, setActivityHistoryVisibility ] = useState(false)
+
   return (
     <>
       <ScrollView style={styles.activity_container}>
         <View style={styles.header}>
           <View style={{display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-end'}}>
-            <TouchableOpacity style={styles.header_button}>
+            <TouchableOpacity style={styles.header_button} onPress={() => setActivityHistoryVisibility(true)}>
               <Icon name="restore" color={'#146C94'}/>
               <Text style={{color: '#146C94', fontWeight: 'bold'}}>History</Text>
             </TouchableOpacity>
@@ -23,6 +26,8 @@ const Activity = () => {
 
           </View>
         </View>
+
+        <ActivityHistory visibility={activityHistoryVisibility} setVisibility={setActivityHistoryVisibility} navigation={navigation}/>
       </ScrollView>
     </>
   )

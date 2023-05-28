@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ScrollView, StyleSheet, View, TextInput, Image, TouchableOpacity, Text} from 'react-native'
 import { Icon } from '@rneui/base'
+import Notification from '../components/Notification'
 
-
-const Home = () => {
+const Home = ({ navigation }) => {
+  const [ notificationVisibility, setNotificationVisibility ] = useState(false)
   return (
     <>
         <ScrollView style={styles.home_container}>
           <View style={styles.header}>
-            <Icon name='notifications' size={40} color={'#B0DAFF'}/>
+            <Icon name='notifications' size={40} color={'#B0DAFF'} onPress={() => setNotificationVisibility(true)}/>
 
             <Icon name='shopping-cart' size={40} color={'#B0DAFF'}/>
           </View> 
@@ -52,7 +53,9 @@ const Home = () => {
               </TouchableOpacity>
             </View>
           </View>
+          <Notification visibility={notificationVisibility} setVisibility={setNotificationVisibility} navigation={navigation}/>
         </ScrollView>
+
     </>
   )
 }
