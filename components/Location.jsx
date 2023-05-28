@@ -7,7 +7,7 @@ const Location = ({ set }) => {
     <>
         <View style={styles.container}>
             <View>
-                {/* Add some mini Designs here */}
+                <View style={styles.bar}></View>
             </View>
 
             <View style={styles.content}>
@@ -55,6 +55,16 @@ const styles = StyleSheet.create({
         width: '100%',
         textAlign: 'center',
         borderRadius: 10,
+    }, 
+    bar: {
+        backgroundColor: '#146C94',
+        height: 5,
+        width: 50,
+        borderRadius: 10,
+        alignSelf: 'center',
+        marginTop: 10,
+        top: -5,
+        zIndex: 3,
     }
 })
 

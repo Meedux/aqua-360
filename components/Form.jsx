@@ -6,6 +6,9 @@ const Form = ({ set }) => {
   return (
     <>
         <View style={styles.container}>
+            <View>
+                <View style={styles.bar}></View>
+            </View>
             <View style={styles.content}>
                 <Button onPress={() => set('register')} title={'Sign Up'} containerStyle={styles.button} buttonStyle={{backgroundColor: '#146C94'}}/>
                 {/* Do a line between the two buttons */}
@@ -45,6 +48,16 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         borderRadius: 10,
         marginBottom: 10
+    },
+    bar: {
+        backgroundColor: '#146C94',
+        height: 5,
+        width: 50,
+        borderRadius: 10,
+        alignSelf: 'center',
+        marginTop: 10,
+        top: -5,
+        zIndex: 3,
     }
 })
 
