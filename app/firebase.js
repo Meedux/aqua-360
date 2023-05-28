@@ -53,6 +53,16 @@ export const createDeliveryBoy = async (employee) => {
     });
 }
 
+export const getUserByUID = async (uid, setUser) => {
+    const querySnapshot = await getDocs(collection(db, "users"));
+    const users = {};
+    querySnapshot.forEach((doc) => {
+        if(doc.data().uid === uid){
+            setUser(doc.data());
+        }
+    });
+}
+
 export const createAdmin = async (user) => {
     const docRef = await addDoc(collection(db, "manager"), user);
     await updateDoc(doc(db, "manager", docRef.id), {
@@ -64,10 +74,10 @@ export const login = async (email, password) => {
     try{
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        return user;
+        return true;
     }
     catch(error){
-        alert(error);
+        return false;
     }
 }
 

@@ -8,8 +8,13 @@ const Login = ({ set, navigation, setVisible }) => {
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
 
-    function loginHandler(){
-        login(email, password)
+    async function loginHandler(){
+        const loginChecker = await login(email, password)
+        if(loginChecker === false){
+            alert('Invalid email or password')
+            return
+        }
+
         setVisible(false)
         navigation.navigate('Home')
     }

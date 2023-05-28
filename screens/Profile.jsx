@@ -1,11 +1,45 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native'
+import React, { useEffect, useState, useContext } from 'react'
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, RefreshControl } from 'react-native'
 import { Icon } from '@rneui/base'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth, getUserByUID } from '../app/firebase'
+import { logout } from '../app/firebase'
+import { ContextOBJ } from '../app/appcontext'
 
-const Profile = () => {
+
+const Profile = ({ navigation }) => {
+  const { setVisible } = useContext(ContextOBJ)
+  const [ user , setUser ] = useState(null)
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if(user){
+        getUserByUID(user.uid, setUser)
+      }
+    })
+  }, [auth])
+
+  const onRefresh = () => {
+    setRefreshing(true);
+
+    getUserByUID(user.uid, setUser)
+
+    setRefreshing(false);
+  }
+
+
+  const logoutHandler = () => {
+    logout()
+    setVisible(true)
+    navigation.navigate('Index')
+  }
+
+
   return (
     <>
-      <ScrollView style={styles.profile_container}>
+      <ScrollView style={styles.profile_container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
         <View style={styles.header}>
           <Icon name='account-circle' size={100} color={'#B0DAFF'} style={{marginRight: 20}}/>
           <View style={styles.header_text}>
@@ -13,12 +47,12 @@ const Profile = () => {
               fontSize: 21,
               fontWeight: 'semibold',
               color: 'white'
-            }}>User Name</Text>
+            }}>{user?.name}</Text>
             <Text style={{
               fontSize: 15,
               fontWeight: 'semibold',
               color: 'white'
-            }}>User Number</Text>
+            }}>{user?.contact_no}</Text>
           </View>
         </View>
 
@@ -67,7 +101,7 @@ const Profile = () => {
                   <Icon name='chevron-right' size={35} color={'#B0DAFF'}/>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.general_items}>
+            <TouchableOpacity style={styles.general_items} onPress={logoutHandler}>
                   <Text style={{
                     fontWeight: 'light',
                     color: '#B0DAFF',
