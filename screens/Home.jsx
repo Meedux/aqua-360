@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { ScrollView, StyleSheet, View, TextInput, Image, TouchableOpacity, Text} from 'react-native'
 import { Icon } from '@rneui/base'
 import Notification from '../components/Notification'
+import GallonCatalog from '../components/GallonCatalog'
 
 const Home = ({ navigation }) => {
+  const [ search, setSearch ] = useState('')
   const [ notificationVisibility, setNotificationVisibility ] = useState(false)
+  const [ gallonCatalogVisbility, setGallonCatalogVisibility ] = useState(false)
   return (
     <>
         <ScrollView style={styles.home_container}>
@@ -16,7 +19,7 @@ const Home = ({ navigation }) => {
 
           <View style={styles.inputContainer}>
               <Icon type="material" name="search" size={30} color={'#146C94'} style={{marginRight: 10}}/>
-              <TextInput placeholder="Search" secureTextEntry onChange={(e) => setPassword(e)}/>
+              <TextInput placeholder="Search" onChange={(e) => setSearch(e)}/>
           </View>
 
           <View style={styles.image_container}>
@@ -28,7 +31,7 @@ const Home = ({ navigation }) => {
             <Text style={styles.catalog_header}>Catalog</Text>
 
             <View style={styles.catalog_items}>
-              <TouchableOpacity style={styles.catalog_item}>
+              <TouchableOpacity style={styles.catalog_item} onPress={() => setGallonCatalogVisibility(true)}>
                 <Image 
                     source={{
                       uri: 'https://firebasestorage.googleapis.com/v0/b/aqua-360.appspot.com/o/app%2FGallon.png?alt=media&token=75a3b307-66a4-4136-b57f-765e3212a713'
@@ -48,11 +51,13 @@ const Home = ({ navigation }) => {
                     style={{
                       height: 89,
                       width: 79,
+                      position: 'relative',
                     }}
                   />
               </TouchableOpacity>
             </View>
           </View>
+          <GallonCatalog visibility={gallonCatalogVisbility} setVisibility={setGallonCatalogVisibility} navigation={navigation}/>
           <Notification visibility={notificationVisibility} setVisibility={setNotificationVisibility} navigation={navigation}/>
         </ScrollView>
 
