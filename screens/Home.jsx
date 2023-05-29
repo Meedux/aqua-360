@@ -3,11 +3,13 @@ import { ScrollView, StyleSheet, View, TextInput, Image, TouchableOpacity, Text}
 import { Icon } from '@rneui/base'
 import Notification from '../components/Notification'
 import GallonCatalog from '../components/GallonCatalog'
+import ContainerCatalog from '../components/ContainerCatalog'
 
 const Home = ({ navigation }) => {
   const [ search, setSearch ] = useState('')
   const [ notificationVisibility, setNotificationVisibility ] = useState(false)
   const [ gallonCatalogVisbility, setGallonCatalogVisibility ] = useState(false)
+  const [ containerCatalogVisibility, setContainerCatalogVisibility ] = useState(false)
   return (
     <>
         <ScrollView style={styles.home_container}>
@@ -43,7 +45,7 @@ const Home = ({ navigation }) => {
                   />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.catalog_item}>
+              <TouchableOpacity style={styles.catalog_item} onPress={() => setContainerCatalogVisibility(true)}>
                 <Image 
                     source={{
                       uri: 'https://firebasestorage.googleapis.com/v0/b/aqua-360.appspot.com/o/app%2FDispenser.png?alt=media&token=fb992fac-a2c4-4f0e-aa30-52fd3d06de06'
@@ -59,6 +61,7 @@ const Home = ({ navigation }) => {
           </View>
           <GallonCatalog visibility={gallonCatalogVisbility} setVisibility={setGallonCatalogVisibility} navigation={navigation}/>
           <Notification visibility={notificationVisibility} setVisibility={setNotificationVisibility} navigation={navigation}/>
+          <ContainerCatalog visibility={containerCatalogVisibility} setVisibility={setContainerCatalogVisibility} navigation={navigation}/>
         </ScrollView>
 
     </>
