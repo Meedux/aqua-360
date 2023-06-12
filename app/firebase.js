@@ -18,6 +18,14 @@ import {
     signOut
 } from "firebase/auth";
 
+import {
+    getStorage,
+    ref,
+    getDownloadURL,
+    uploadBytes
+} from "firebase/storage";
+
+
 const firebaseConfig = {
     apiKey: "AIzaSyACqfoi29jhoVZgbXkEhRlDN0rxxiemE4g",
     authDomain: "aqua-360.firebaseapp.com",
@@ -30,6 +38,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+export const storage = getStorage(app);
 
 export const createUser = async (user, id) => {
     const docRef = await addDoc(collection(db, "users"), user);
@@ -230,3 +239,15 @@ export const notify = async (id, type) => {
     }
 }
 
+export const uploadImage = async (file) => {
+    try{
+        const id = Math.random().toString(36).substring(2);
+        const reff = ref(storage, 'images/' + id);
+        await uploadBytes(reff, file.assets[0].uri);
+        const url = await getDownloadURL(reff);
+        return url;
+
+    }catch(error){
+        alert(error);
+    }
+}

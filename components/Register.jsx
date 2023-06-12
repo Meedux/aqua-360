@@ -1,7 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native'
-import { Icon, Button } from '@rneui/themed'
-import { register } from '../app/firebase'
+import { Icon, Button, Image } from '@rneui/themed'
+import { register, uploadImage } from '../app/firebase'
+
+import * as ImagePicker from 'expo-image-picker';
 
 const Register = ({ set, navigation, setVisible }) => {
     const [ email, setEmail ] = useState('')
@@ -9,6 +11,32 @@ const Register = ({ set, navigation, setVisible }) => {
     const [ name, setName ] = useState('')
     const [ address, setAddress ] = useState('')
     const [ number, setNumber ] = useState('')
+
+    const [ file , setFile ] = useState(null)
+    const [ fileURL, setFileURL ] = useState('')
+
+    useEffect(() => {
+        ImagePicker.requestMediaLibraryPermissionsAsync().then((data) => {
+            console.log(data)
+        })
+    }, [])
+
+
+    const handleChooseFile = async () => {
+        try {
+          const res = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [16, 9],
+            quality: 1,
+          });
+          const url = await uploadImage(res)
+            setFileURL(url)
+            setFile(res)
+        } catch (err) {
+          console.log(err);
+        }
+      };
 
     function registerHandler(){
         const user = {
@@ -18,6 +46,7 @@ const Register = ({ set, navigation, setVisible }) => {
             address: address,
             contact_no: number,
             basket: [],
+            idURL: fileURL
         }
         register(user)
         setVisible(false)
@@ -88,6 +117,23 @@ const Register = ({ set, navigation, setVisible }) => {
                     </View>
 
 
+                    {
+                        file ? (
+                            <Button
+                                title="Update File"
+                                onPress={handleChooseFile}
+                                style={{ marginBottom: 30 }}
+                            />
+                        ) : (
+                            <Button
+                                title="Choose File"
+                                onPress={handleChooseFile}
+                                style={{ marginBottom: 30 }}
+                            />
+                        )
+                    }
+
+
                     <Button onPress={registerHandler} title={'SIGN UP'} containerStyle={styles.button} buttonStyle={{backgroundColor: '#146C94'}} iconRight={<Icon  />}/>
                 </View>
         </View>
@@ -99,7 +145,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#B0DAFF',
         padding: 20,
-        height: 630,
+        height: 700,
         borderTopLeftRadius: 27,
         borderTopRightRadius: 27,
         zIndex: 4,
@@ -117,7 +163,8 @@ const styles = StyleSheet.create({
         width: '100%',
         textAlign: 'center',
         borderRadius: 10,
-        marginBottom: 10
+        marginBottom: 10,
+        marginTop: 20
     },
 
     labelContainer: {
