@@ -16,7 +16,7 @@ const Home = ({ navigation }) => {
           <View style={styles.header}>
             <Icon name='notifications' size={40} color={'#B0DAFF'} onPress={() => setNotificationVisibility(true)}/>
 
-            <Icon name='shopping-cart' size={40} color={'#B0DAFF'}/>
+            <Icon name='shopping-cart' size={40} color={'#B0DAFF'}  onPress={() => navigation.navigate("Basket")}/>
           </View> 
 
           <View style={styles.inputContainer}>

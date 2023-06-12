@@ -83,6 +83,8 @@ const ContainerCatalog = ({ visibility, setVisibility, navigation }) => {
                                         name: 'Large Container',
                                         price: 100,
                                         size: '30L',
+                                        img: 'https://firebasestorage.googleapis.com/v0/b/aqua-360.appspot.com/o/app%2FDispenser.png?alt=media&token=fb992fac-a2c4-4f0e-aa30-52fd3d06de06',
+                                        quantity: 1
                                     })
                                 }}
                                 >
@@ -140,6 +142,8 @@ const ContainerCatalog = ({ visibility, setVisibility, navigation }) => {
                                         name: 'Medium Container',
                                         price: 50,
                                         size: '15L',
+                                        img: 'https://firebasestorage.googleapis.com/v0/b/aqua-360.appspot.com/o/app%2FDispenser.png?alt=media&token=fb992fac-a2c4-4f0e-aa30-52fd3d06de06',
+                                        quantity: 1
                                     })
                                 }}
                                 >
@@ -197,6 +201,8 @@ const ContainerCatalog = ({ visibility, setVisibility, navigation }) => {
                                         name: 'Small Container',
                                         price: 25,
                                         size: '7L',
+                                        img: 'https://firebasestorage.googleapis.com/v0/b/aqua-360.appspot.com/o/app%2FDispenser.png?alt=media&token=fb992fac-a2c4-4f0e-aa30-52fd3d06de06',
+                                        quantity: 1
                                     })
                                 }}
                                 >
@@ -209,7 +215,7 @@ const ContainerCatalog = ({ visibility, setVisibility, navigation }) => {
                 </View>
             </View>
 
-            <ContainerCatalogTab setVisibility={setTabVisibility} visibility={tabVisibility} data={data}/>
+            <ContainerCatalogTab setVisibility={setTabVisibility} visibility={tabVisibility} data={data} setData={setData}/>
         </BottomSheet>
     </>
   )

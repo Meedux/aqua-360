@@ -6,6 +6,7 @@ import Home from '../screens/Home'
 import Index from '../screens/Index'
 import Activity from '../screens/Activity'
 import Profile from '../screens/Profile'
+import Basket from '../screens/Basket'
 
 import { Icon } from '@rneui/themed'
 
@@ -66,6 +67,16 @@ const Navibar = () => {
                         tabBarIcon : ({focused}) => (
                             <Icon type="material" name="person" size={40} color={focused ? '#146C94' : '#19A7CE'} style={{marginBottom: 10}}/>
                         )
+                    }}/>
+                    {/* Basket Tab but the Bottom Navigator is hidden */}
+                    <Tab.Screen name="Basket" component={Basket} options={{
+                        tabBarIcon : ({focused}) => (
+                            <Icon type="material" name="shopping-cart" size={40} color={focused ? '#146C94' : '#19A7CE'} style={{marginBottom: 10}}/>
+                        ),
+                        tabBarStyle: {
+                            display: "none"
+                        },
+                        tabBarButton: (props) => null,
                     }}/>
                     
                 </Tab.Navigator>

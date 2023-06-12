@@ -1,9 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native'
 import { Icon, BottomSheet } from '@rneui/themed'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth, addToBasket } from '../app/firebase'
 
-const ContainerCatalogTab = ({ visibility, setVisibility, navigation, data }) => {
+const ContainerCatalogTab = ({ visibility, setVisibility, navigation, data, setData }) => {
     const [qty, setQty] = useState(1)
+    const [uid, setUid] = useState('')
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if(user){
+                setUid(user.uid)
+            }
+        })
+    }, [])
+
+
   return (
     <>
         <BottomSheet isVisible={visibility} onBackdropPress={() => setVisibility(false)} backdropStyle={{opacity: 0}} containerStyle={{background: 'red'}}>
@@ -86,11 +99,12 @@ const ContainerCatalogTab = ({ visibility, setVisibility, navigation, data }) =>
                             borderRadius: 10,
                             width: '100%',
                         }} onPress={() => {
+                            const temp = data
+                            temp.quantity = qty
+                            setData(temp)
+                            addToBasket(data, uid)
+                            setQty(1)
                             setVisibility(false)
-                            // navigation.navigate('Checkout', {
-                            //     data: data,
-                            //     qty: qty
-                            // })
                         }}>
                             <Text style={{fontSize: 19, fontWeight: 'semibold',color: '#146C94', marginBottom: 5, textAlign: 'center'}}>Add to Basket</Text>
                         </TouchableOpacity>

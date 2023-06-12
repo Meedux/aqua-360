@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Icon, BottomSheet } from '@rneui/themed'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth, getTransactions } from '../app/firebase'
 
 const ActivityHistory = ({ visibility, setVisibility, navigation }) => {
+    const [ id, setId ] = useState('')
+    const [ transactions, setTransactions ] = useState([])
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if(user){
+                setId(user?.uid)
+                getTransactions(user?.uid).then((data) => {
+                    setTransactions(data)
+                })
+            }
+        })
+
+    }, [])
   return (
     <>
         <BottomSheet isVisible={visibility} containerStyle={{background: 'red'}}>
@@ -24,10 +40,17 @@ const ActivityHistory = ({ visibility, setVisibility, navigation }) => {
                 </View>
 
                 <View style={styles.items_container}>
-                    <Text style={{fontSize: 16, color: '#fff', marginBottom: 10}}>Recent</Text>
-                    <View style={styles.items}></View>
-                    <View style={styles.items}></View>
-                    <View style={styles.items}></View>
+                    <Text style={{fontSize: 16, color: '#fff', marginBottom: 10}}>Recent Transactions</Text>
+                    {
+                        transactions.map((transaction, index) => {
+                            return (
+                                <View key={index} style={styles.items}>
+                                    <Text style={{fontSize: 16, color: '#146C94', marginBottom: 10, fontWeight: 'bold'}}>Transaction Type: {transaction?.option}</Text>
+                                    <Text style={{fontSize: 16, color: '#146C94', marginBottom: 10, fontWeight: 'bold'}}>Transaction Amount: {transaction?.total}</Text>
+                                </View>
+                            )
+                        })
+                    }
                 </View>
             </View>
         </BottomSheet>
@@ -57,6 +80,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#B0DAFF',
       marginBottom: 25,
       borderRadius: 10,
+      padding: 10,
   },
   items_container: {
       marginTop: 30,

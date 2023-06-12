@@ -78,12 +78,14 @@ const GallonCatalog = ({ visibility, setVisibility, navigation }) => {
                                     alignItems: 'center',
                                 }}
                                 onPress={() => {
-                                    setTabVisibility(true)
                                     setData({
                                         name: 'Large Gallon',
                                         price: 100,
                                         size: '30L',
+                                        img: 'https://firebasestorage.googleapis.com/v0/b/aqua-360.appspot.com/o/app%2FGallon.png?alt=media&token=75a3b307-66a4-4136-b57f-765e3212a713',
+                                        quantity: 1
                                     })
+                                    setTabVisibility(true)
                                 }}
                                 >
                                     <Icon name='add' size={30} color={'#146C94'}/>
@@ -135,12 +137,14 @@ const GallonCatalog = ({ visibility, setVisibility, navigation }) => {
                                     alignItems: 'center',
                                 }}
                                 onPress={() => {
-                                    setTabVisibility(true)
                                     setData({
                                         name: 'Medium Gallon',
                                         price: 50,
                                         size: '15L',
+                                        img: 'https://firebasestorage.googleapis.com/v0/b/aqua-360.appspot.com/o/app%2FGallon.png?alt=media&token=75a3b307-66a4-4136-b57f-765e3212a713',
+                                        quantity: 1
                                     })
+                                    setTabVisibility(true)
                                 }}
                                 >
                                     <Icon name='add' size={30} color={'#146C94'}/>
@@ -192,12 +196,14 @@ const GallonCatalog = ({ visibility, setVisibility, navigation }) => {
                                     alignItems: 'center',
                                 }}
                                 onPress={() => {
-                                    setTabVisibility(true)
                                     setData({
                                         name: 'Small Gallon',
                                         price: 25,
                                         size: '7L',
+                                        img: 'https://firebasestorage.googleapis.com/v0/b/aqua-360.appspot.com/o/app%2FGallon.png?alt=media&token=75a3b307-66a4-4136-b57f-765e3212a713',
+                                        quantity: 1
                                     })
+                                    setTabVisibility(true)
                                 }}
                                 >
                                     <Icon name='add' size={30} color={'#146C94'}/>
@@ -209,7 +215,7 @@ const GallonCatalog = ({ visibility, setVisibility, navigation }) => {
                 </View>
             </View>
 
-            <GallonCatalogTab setVisibility={setTabVisibility} visibility={tabVisibility} data={data}/>
+            <GallonCatalogTab setVisibility={setTabVisibility} visibility={tabVisibility} data={data} setData={setData}/>
         </BottomSheet>
     </>
   )

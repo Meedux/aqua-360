@@ -16,7 +16,7 @@ const Profile = ({ navigation }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if(user){
-        getUserByUID(user.uid, setUser)
+        getUserByUID(user?.uid, setUser)
       }
     })
   }, [auth])
@@ -24,7 +24,7 @@ const Profile = ({ navigation }) => {
   const onRefresh = () => {
     setRefreshing(true);
 
-    getUserByUID(user.uid, setUser)
+    getUserByUID(user?.uid, setUser)
 
     setRefreshing(false);
   }

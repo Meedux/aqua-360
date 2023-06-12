@@ -7,6 +7,7 @@ const AppContext = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const miniDb = []
     const [user, setUser] = useState(null)
+    const [ data, setData ] = useState(null)
 
     const login = (user) => {
         miniDb.forEach((item) => {
