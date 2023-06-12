@@ -21,6 +21,7 @@ import {
 import {
     getStorage,
     ref,
+    uploadBytesResumable,
     getDownloadURL,
     uploadBytes
 } from "firebase/storage";
@@ -241,13 +242,22 @@ export const notify = async (id, type) => {
 
 export const uploadImage = async (file) => {
     try{
+        // name the image using math random
         const id = Math.random().toString(36).substring(2);
-        const reff = ref(storage, 'images/' + id);
-        await uploadBytes(reff, file.assets[0].uri);
-        const url = await getDownloadURL(reff);
-        return url;
 
+        const response = await fetch(file.assets[0].uri)
+        const blob = await response?.blob(); 
+
+        // upload the image to firebase storage
+        const reference = ref(storage, `images/` + id);
+        const uploadTask = await uploadBytes(reference, blob);
+        // get the image url
+        const url = await getDownloadURL(uploadTask.ref);
+        return url
+
+        
     }catch(error){
         alert(error);
+        console.log(error)
     }
 }
