@@ -34,7 +34,6 @@ const Basket = ({ visibility, setVisibility, navigation }) => {
     const onRefresh = () => {
         setRefreshing(true);
         getBasket(user?.uid, setBasket)
-        console.log(user?.uid)
         setRefreshing(false);
     }
 

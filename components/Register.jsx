@@ -46,7 +46,8 @@ const Register = ({ set, navigation, setVisible }) => {
             address: address,
             contact_no: number,
             basket: [],
-            idURL: fileURL
+            idURL: fileURL,
+            isAdmin: false 
         }
         register(user)
         setVisible(false)

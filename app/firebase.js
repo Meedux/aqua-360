@@ -7,7 +7,8 @@ import {
     addDoc,
     doc,
     updateDoc,
-    deleteDoc
+    deleteDoc,
+    getDoc
 } from "firebase/firestore";
 
 import {
@@ -72,6 +73,18 @@ export const getUserByUID = async (uid, setUser) => {
     });
 }
 
+export const getUserByUIDD = async (uid) => {
+    const querySnapshot = await getDocs(collection(db, "users"));
+    let user;
+    querySnapshot.forEach((doc) => {
+        if(doc.data().uid === uid){
+            user = doc.data();
+        }
+    });
+
+    return user;
+}
+
 export const createAdmin = async (user) => {
     const docRef = await addDoc(collection(db, "manager"), user);
     await updateDoc(doc(db, "manager", docRef.id), {
@@ -83,10 +96,12 @@ export const login = async (email, password) => {
     try{
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        if(user) return true
+        const creds = await getUserByUIDD(user.uid);
+        return creds;
     }
     catch(error){
-        return false;
+        alert(error)
+        return null;
     }
 }
 
@@ -154,17 +169,16 @@ export const pay = async (id, address, opt, cardDetails) => {
             }
         })
 
-        // get the user's document
-        const userDoc = doc(db, "users", id);
-
+        // get the user's data
+        const userData = await getUserByUIDD(id);
 
         // create a transaction document with the user, the items, the total price, and the address
         const transaction = {
-            user: userDoc,
+            user: userData,
             items: basket,
             total: 0,
             address: address,
-            option: opt == 'standard' ?  "Standard < 20 Mins" : opt == 'later' && "Order for Later",
+            option: (opt === 'standard') ?  "Standard < 20 Mins" : (opt == 'later') && "Order for Later",
             cardDetails: cardDetails
         }
 
@@ -187,6 +201,19 @@ export const pay = async (id, address, opt, cardDetails) => {
 
         //notify with the type of pay
         await notify(id, "pay");
+    }catch(error){
+        alert(error);
+    }
+}
+
+export const getAllTransactions = async () => {
+    try{
+        const querySnapshot = await getDocs(collection(db, "transactions"));
+        const transactions = [];
+        querySnapshot.forEach((doc) => {
+            transactions.push(doc.data());
+        });
+        return transactions;
     }catch(error){
         alert(error);
     }
@@ -258,6 +285,5 @@ export const uploadImage = async (file) => {
         
     }catch(error){
         alert(error);
-        console.log(error)
     }
 }

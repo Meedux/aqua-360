@@ -10,13 +10,21 @@ const Login = ({ set, navigation, setVisible }) => {
 
     async function loginHandler(){
         const loginChecker = await login(email, password)
-        if(loginChecker === false){
+        console.log(loginChecker)
+        if(!loginChecker){
             alert('Invalid email or password')
             return
+        }else{
+            if(loginChecker.isAdmin == true){
+                navigation.navigate('Admin')
+            }else{
+                navigation.navigate('Client')
+            }
+    
         }
 
         setVisible(false)
-        navigation.navigate('Home')
+        
     }
 
     return (
